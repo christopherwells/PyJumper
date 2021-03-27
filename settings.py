@@ -20,6 +20,10 @@ YELLOW = (255, 255, 0)
 # sprite specific
 TILE_SIZE = 32
 
+# player
+PLAYER_ACC = 0.75
+PLAYER_FRICTION = -0.11
+
 # assets
 game_folder = path.dirname(__file__)
 img_folder = path.join(game_folder, "img")
