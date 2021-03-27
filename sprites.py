@@ -5,8 +5,9 @@ vector = pygame.math.Vector2
 
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self):
+    def __init__(self, game):
         pygame.sprite.Sprite.__init__(self)
+        self.game = game
         self.image = pygame.Surface((32, 32))
         self.image.fill(CYAN)
         self.rect = self.image.get_rect()
@@ -14,6 +15,15 @@ class Player(pygame.sprite.Sprite):
         self.pos = vector(WIDTH / 2, HEIGHT / 2)
         self.vel = vector(0, 0)
         self.acc = vector(0, 0)
+
+    def jump(self):
+        # can jump if on a block
+        self.rect.x += 1
+        collision = pygame.sprite.spritecollide(self, self.game.blocks, False)
+        self.rect.x -= 1
+        if collision:
+            # jump
+            self.vel.y = -15
 
     def update(self):
         # gravity = y value
@@ -35,7 +45,7 @@ class Player(pygame.sprite.Sprite):
             self.pos.x = 0
         if self.pos.x < 0:
             self.pos.x = WIDTH
-
+        # collision check position
         self.rect.midbottom = self.pos
 
 class Block(pygame.sprite.Sprite):

@@ -25,6 +25,14 @@ PLAYER_ACC = 0.75
 PLAYER_FRICTION = -0.11
 PLAYER_GRAVITY = 0.6
 
+# splash screen
+BLOCK_LIST = [
+    (0, HEIGHT - 32, WIDTH, 32),
+    (WIDTH / 2 - 32, HEIGHT * 3 / 4, 100, 20),
+    (125, HEIGHT - 320, 100, 20),
+    (320, 450, 100, 20),
+    (175, 300, 50, 20)]
+
 # assets
 game_folder = path.dirname(__file__)
 img_folder = path.join(game_folder, "img")

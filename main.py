@@ -21,14 +21,13 @@ class Game:
         # new game
         self.all_sprites = pygame.sprite.Group()
         self.blocks = pygame.sprite.Group()
-        self.player = Player()
+        self.player = Player(self)
         self.all_sprites.add(self.player)
-        p1 = Block(0, HEIGHT - 32, WIDTH, 32)
-        p2 = Block(WIDTH / 2 - 32, HEIGHT * 3 / 4, 100, 20)
-        self.all_sprites.add(p1)
-        self.all_sprites.add(p2)
-        self.blocks.add(p1)
-        self.blocks.add(p2)
+        for b in BLOCK_LIST:
+            # x,y,w,h
+            block = Block(*b)
+            self.all_sprites.add(block)
+            self.blocks.add(block)
         self.loop()
 
     def loop(self):
@@ -43,12 +42,13 @@ class Game:
     def update(self):
         # update
         self.all_sprites.update()
-        # collision detection
-        collision = pygame.sprite.spritecollide(
-            self.player, self.blocks, False)
-        if collision:
-            self.player.pos.y = collision[0].rect.top + 1
-            self.player.vel.y = 0
+        # collision detection if falling
+        if self.player.vel.y > 0:
+            collision = pygame.sprite.spritecollide(
+                self.player, self.blocks, False)
+            if collision:
+                self.player.pos.y = collision[0].rect.top + 1
+                self.player.vel.y = 0
 
     def events(self):
         # pygame events
@@ -58,6 +58,10 @@ class Game:
                 if self.playing:
                     self.playing = False
                 self.running = False
+            # key presses
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    self.player.jump()
 
     def draw(self):
         # draw events
