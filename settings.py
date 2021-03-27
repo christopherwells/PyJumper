@@ -23,6 +23,7 @@ TILE_SIZE = 32
 # player
 PLAYER_ACC = 0.75
 PLAYER_FRICTION = -0.11
+PLAYER_GRAVITY = 0.6
 
 # assets
 game_folder = path.dirname(__file__)
