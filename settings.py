@@ -22,7 +22,7 @@ SKY = (0, 155, 155)
 PLAYER_ACC = 0.8
 PLAYER_FRICTION = -0.10
 PLAYER_GRAVITY = 0.8
-PLAYER_JUMP = -18
+PLAYER_JUMP = -19
 
 # starting blocks
 BLOCK_LIST = [(0, HEIGHT - 60),
@@ -33,8 +33,8 @@ BLOCK_LIST = [(0, HEIGHT - 60),
 
 # assets
 GAME_FONT = 'Arial'
-SCORE_FILE = "highscores.txt"
+SCORE_FILE = 'highscores.txt'
 game_folder = path.dirname(__file__)
-img_folder = path.join(game_folder, "img")
-SPRITESHEET = "spritesheet_jumper.png"
+img_folder = path.join(game_folder, 'img')
+SPRITESHEET = 'spritesheet_jumper.png'
 ANIMATION_SPEED = 500

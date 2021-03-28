@@ -33,6 +33,8 @@ class Game:
                 self.high_score = 0
         # load spritesheet
         self.spritesheet = Spritesheet(path.join(img_dir, SPRITESHEET))
+        # load sounds
+        self.snd_dir = path.join(self.dir, 'snd')
 
     def new(self):
         # new game
@@ -56,6 +58,8 @@ class Game:
             self.update()
             self.events()
             self.draw()
+            system('clear')
+            print(self.player.acc)
 
     def update(self):
         # update
@@ -103,8 +107,8 @@ class Game:
 
         # generate new blocks
         while len(self.blocks) < 6:
-            w = randrange(50, 100)
-            b = Block(self, randrange(0, WIDTH - w), randrange(-75, -30))
+            w = randrange(64, 128)
+            b = Block(self, randrange(0, WIDTH - w), randrange(-64, -32))
             self.blocks.add(b)
             self.all_sprites.add(b)
 

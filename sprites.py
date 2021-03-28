@@ -1,4 +1,5 @@
 from random import choice
+from os import system
 import pygame
 from settings import *
 vector = pygame.math.Vector2
@@ -69,6 +70,10 @@ class Player(pygame.sprite.Sprite):
         if collision and not self.jumping:
             self.jumping = True
             self.vel.y = PLAYER_JUMP
+        # moving before jump gives a boost
+        if collision and not self.jumping and self.walking:
+            self.jumping = True
+            self.vel.y = PLAYER_JUMP * 1.3
 
     def jump_cut(self):
         if self.jumping:
