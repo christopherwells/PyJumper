@@ -3,7 +3,7 @@
 > 
 > python main .py
 
-!(https://raw.githubusercontent.com/christopherwells/platformer/master/screen.png)[running in manjaro]
+![running in manjaro](https://raw.githubusercontent.com/christopherwells/platformer/master/screen.png)
 
 Space to jump, left and right arrow keys to move.
 
