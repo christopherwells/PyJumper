@@ -42,8 +42,8 @@ class Game:
         self.player = Player(self)
         self.all_sprites.add(self.player)
         for b in BLOCK_LIST:
-            # x,y,w,h
-            block = Block(*b)
+            # x,y
+            block = Block(self, *b)
             self.all_sprites.add(block)
             self.blocks.add(block)
         self.loop()
@@ -72,10 +72,10 @@ class Game:
         # if player reaches 3/4 height
         if self.player.rect.top <= HEIGHT / 4:
             # change y to velocity so the level can move
-            self.player.pos.y += abs(self.player.vel.y)
+            self.player.pos.y += max(abs(self.player.vel.y), 2)
             for block in self.blocks:
                 # move blocks down at same velocity as player
-                block.rect.y += abs(self.player.vel.y)
+                block.rect.y += max(abs(self.player.vel.y), 2)
                 # remove old blocks
                 if block.rect.top >= HEIGHT:
                     block.kill()
@@ -96,7 +96,7 @@ class Game:
         # generate new blocks
         while len(self.blocks) < 6:
             w = randrange(50, 100)
-            b = Block(randrange(0, WIDTH - w), randrange(-75, -30), w, 20)
+            b = Block(self, randrange(0, WIDTH - w), randrange(-75, -30))
             self.blocks.add(b)
             self.all_sprites.add(b)
 
@@ -117,6 +117,7 @@ class Game:
         # draw events
         self.screen.fill(SKY)
         self.all_sprites.draw(self.screen)
+        self.screen.blit(self.player.image, self.player.rect)
         self.draw_text("Score: " + str(self.score), 22, WHITE, WIDTH / 2, 15)
 
         # flip display after draw events

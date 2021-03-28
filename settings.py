@@ -24,11 +24,11 @@ PLAYER_FRICTION = -0.11
 PLAYER_GRAVITY = 0.6
 
 # starting blocks
-BLOCK_LIST = [(0, HEIGHT - 40, WIDTH, 40),
-              (WIDTH / 2 - 50, HEIGHT * 3 / 4, 100, 20),
-              (125, HEIGHT - 350, 100, 20),
-              (350, 200, 100, 20),
-              (175, 100, 50, 20)]
+BLOCK_LIST = [(0, HEIGHT - 60),
+              (WIDTH / 2 - 50, HEIGHT * 3 / 4),
+              (125, HEIGHT - 350),
+              (350, 200),
+              (175, 100)]
 
 # assets
 GAME_FONT = 'Arial'

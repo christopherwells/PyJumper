@@ -1,4 +1,4 @@
-# sprite class
+from random import choice
 import pygame
 from settings import *
 vector = pygame.math.Vector2
@@ -30,9 +30,9 @@ class Player(pygame.sprite.Sprite):
         self.load_images()
         self.image = self.standing_frames[0]
         self.rect = self.image.get_rect()
-        self.rect.center = (WIDTH / 2, HEIGHT / 2)
+        self.rect.center = (40, HEIGHT - 100)
         # physics
-        self.pos = vector(WIDTH / 2, HEIGHT / 2)
+        self.pos = vector(40, HEIGHT - 100)
         self.vel = vector(0, 0)
         self.acc = vector(0, 0)
 
@@ -62,12 +62,12 @@ class Player(pygame.sprite.Sprite):
 
     def jump(self):
         # can jump if on a block
-        self.rect.x += 1
+        self.rect.x += 2
         collision = pygame.sprite.spritecollide(self, self.game.blocks, False)
-        self.rect.x -= 1
+        self.rect.x -= 2
         if collision:
             # jump
-            self.vel.y = -15
+            self.vel.y = -18
 
     def update(self):
         self.animate()
@@ -90,8 +90,8 @@ class Player(pygame.sprite.Sprite):
             self.vel.x = 0
         # wrap side of screen
         if self.pos.x > WIDTH + self.rect.width / 2:
-            self.pos.x = 0 - self.rect.width /2
-        if self.pos.x < 0 - self.rect.width /2:
+            self.pos.x = 0 - self.rect.width / 2
+        if self.pos.x < 0 - self.rect.width / 2:
             self.pos.x = WIDTH + self.rect.width / 2
 
         # block collision check position
@@ -139,10 +139,16 @@ class Player(pygame.sprite.Sprite):
 
 
 class Block(pygame.sprite.Sprite):
-    def __init__(self, x, y, w, h):
+    def __init__(self, game, x, y):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.Surface((w, h))
-        self.image.fill(GREEN)
+        self.game = game
+        # sprite
+        images = [
+            self.game.spritesheet.get_image(0, 288, 380, 94),
+            self.game.spritesheet.get_image(213, 1662, 201, 100)
+        ]
+        self.image = choice(images)
+        self.image.set_colorkey(BLACK)
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
