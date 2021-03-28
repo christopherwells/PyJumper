@@ -66,8 +66,16 @@ class Game:
             collision = pygame.sprite.spritecollide(
                 self.player, self.blocks, False)
             if collision:
-                self.player.pos.y = collision[0].rect.top + 1
-                self.player.vel.y = 0
+                # snap to block if player.bottom high enough
+                # snap to lowest block first
+                lowest = collision[0]
+                for c in collision:
+                    if c.rect.bottom > lowest.rect.bottom:
+                        lowest = collision
+                if self.player.pos.y < lowest.rect.centery:
+                    self.player.pos.y = lowest.rect.top + 1
+                    self.player.vel.y = 0
+                    self.player.jumping = False
 
         # if player reaches 3/4 height
         if self.player.rect.top <= HEIGHT / 4:
@@ -112,6 +120,9 @@ class Game:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     self.player.jump()
+            if event.type == pygame.KEYUP:
+                if event.key == pygame.K_SPACE:
+                    self.player.jump_cut()
 
     def draw(self):
         # draw events
