@@ -4,12 +4,25 @@ from settings import *
 vector = pygame.math.Vector2
 
 
+class Spritesheet:
+    # load and parse spritesheet
+    def __init__(self, filename):
+        self.spritesheet = pygame.image.load(filename).convert()
+
+    def get_image(self, x, y, w, h):
+        image = pygame.Surface((w, h))
+        # take from spritesheet and blit to (0,0) of image
+        image.blit(self.spritesheet, (0, 0), (x, y, w, h))
+        image = pygame.transform.scale(image, (w // 2, h // 2))
+        return image
+
+
 class Player(pygame.sprite.Sprite):
     def __init__(self, game):
         pygame.sprite.Sprite.__init__(self)
         self.game = game
-        self.image = pygame.Surface((32, 32))
-        self.image.fill(YELLOW)
+        self.image = self.game.spritesheet.get_image(614, 1063, 120, 191)
+        self.image.set_colorkey(BLACK)
         self.rect = self.image.get_rect()
         self.rect.center = (WIDTH / 2, HEIGHT / 2)
         self.pos = vector(WIDTH / 2, HEIGHT / 2)

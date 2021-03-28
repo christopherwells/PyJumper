@@ -38,3 +38,4 @@ GAME_FONT = 'Arial'
 SCORE_FILE = "highscores.txt"
 game_folder = path.dirname(__file__)
 img_folder = path.join(game_folder, "img")
+SPRITESHEET = "spritesheet_jumper.png"
