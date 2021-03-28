@@ -14,7 +14,7 @@ class Spritesheet:
         image = pygame.Surface((w, h))
         # take from spritesheet and blit to (0,0) of image
         image.blit(self.spritesheet, (0, 0), (x, y, w, h))
-        image = pygame.transform.scale(image, (w // 2, h // 2))
+        image = pygame.transform.scale(image, (round(w // 1.6), round(h // 1.6)))
         return image
 
 
@@ -40,15 +40,15 @@ class Player(pygame.sprite.Sprite):
     def load_images(self):
         # standing images
         self.standing_frames = [
-            self.game.spritesheet.get_image(614, 1063, 120, 191),
-            self.game.spritesheet.get_image(690, 406, 120, 201)
+            self.game.spritesheet2.get_image(512, 1280, 128, 256),
+            self.game.spritesheet2.get_image(512, 1280, 128, 256)
         ]
-        # walking right images
         for frame in self.standing_frames:
             frame.set_colorkey(BLACK)
+        # walking right images
         self.walking_frames_right = [
-            self.game.spritesheet.get_image(678, 860, 120, 201),
-            self.game.spritesheet.get_image(692, 1458, 120, 207)
+            self.game.spritesheet2.get_image(512, 512, 128, 256),
+            self.game.spritesheet2.get_image(512, 256, 128, 256)
         ]
         # use right images but reversed
         self.walking_frames_left = []
@@ -57,8 +57,8 @@ class Player(pygame.sprite.Sprite):
             self.walking_frames_left.append(
                 pygame.transform.flip(frame, True, False))
         # jump images
-        self.jumping_frame = self.game.spritesheet.get_image(
-            382, 763, 150, 181)
+        self.jumping_frame = self.game.spritesheet2.get_image(
+            768, 1536, 128, 256)
         self.jumping_frame.set_colorkey(BLACK)
 
     def jump(self):
@@ -120,7 +120,7 @@ class Player(pygame.sprite.Sprite):
 
         # walking animation
         if self.walking:
-            if now - self.last_update > ANIMATION_SPEED / 2:
+            if now - self.last_update > ANIMATION_SPEED:
                 self.last_update = now
                 # change animation frame, adjust image rect
                 self.current_frame = (
@@ -155,8 +155,8 @@ class Block(pygame.sprite.Sprite):
         self.game = game
         # sprite
         images = [
-            self.game.spritesheet.get_image(0, 288, 380, 94),
-            self.game.spritesheet.get_image(213, 1662, 201, 100)
+            self.game.spritesheet1.get_image(630, 140, 70, 70),
+            self.game.spritesheet1.get_image(70, 70, 70, 70)
         ]
         self.image = choice(images)
         self.image.set_colorkey(BLACK)

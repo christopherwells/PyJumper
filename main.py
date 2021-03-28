@@ -31,8 +31,9 @@ class Game:
             # file empty
             except:
                 self.high_score = 0
-        # load spritesheet
-        self.spritesheet = Spritesheet(path.join(img_dir, SPRITESHEET))
+        # load spritesheets
+        self.spritesheet1 = Spritesheet(path.join(img_dir, SPRITESHEET1))
+        self.spritesheet2 = Spritesheet(path.join(img_dir, SPRITESHEET2))
         # load sounds
         self.snd_dir = path.join(self.dir, 'snd')
 
