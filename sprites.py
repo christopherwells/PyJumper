@@ -1,4 +1,4 @@
-from random import choice
+from random import choice, randrange
 from os import system
 import pygame
 from settings import *
@@ -190,3 +190,47 @@ class Block(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
+
+
+class Mob(pygame.sprite.Sprite):
+    def __init__(self, game):
+        self.groups = game.all_sprites, game.mobs
+        pygame.sprite.Sprite.__init__(self, self.groups)
+        self.game = game
+        self.image_up = self.game.spritesheet3.get_image(566, 510, 122, 139)
+        self.image_up.set_colorkey(BLACK)
+        self.image_down = self.game.spritesheet3.get_image(568, 1534, 122, 135)
+        self.image_down.set_colorkey(BLACK)
+        self.image = self.image_up
+        self.rect = self.image.get_rect()
+        self.rect.centerx = choice([-100, WIDTH + 100])
+        self.vx = randrange(1, 4)
+        if self.rect.centerx > WIDTH:
+            self.vx *= -1
+        self.rect.y = randrange(HEIGHT / 2)
+        self.vy = 0
+        # curve acc/deceleration
+        self.dy = 0.5
+
+    def update(self):
+        #  x speed is constant
+        self.rect.x += self.vx
+        # add dy to change acceleration up or down
+        self.vy += self.dy
+        if self.vy > 3 or self.vy < -3:
+            self.dy *= -1
+        # center image
+        center = self.rect.center
+        # moving up
+        if self.dy < 0:
+            self.image = self.image_up
+        # moving down
+        else:
+            self.image = self.image_down
+        # center image
+        self.rect.center = center
+        # move y
+        self.rect.y += self.vy
+        # kill if off screen too far
+        if self.rect.left > WIDTH + 100 or self.rect.right < -100:
+            self.kill()

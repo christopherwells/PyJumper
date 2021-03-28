@@ -3,6 +3,7 @@ from os import path
 # game
 TITLE = "Hello world!"
 FPS = 60
+MOB_FREQ = 5000
 
 # window
 WIDTH, HEIGHT = 480, 600
@@ -37,4 +38,5 @@ SCORE_FILE = 'highscores.txt'
 game_folder = path.dirname(__file__)
 SPRITESHEET1 = 'tiles_sheet.png'
 SPRITESHEET2 = 'spritesheet_players.png'
+SPRITESHEET3 = 'spritesheet_jumper.png'
 ANIMATION_SPEED = 200

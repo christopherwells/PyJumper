@@ -40,6 +40,7 @@ class Game:
         # load spritesheets
         self.spritesheet1 = Spritesheet(path.join(img_dir, SPRITESHEET1))
         self.spritesheet2 = Spritesheet(path.join(img_dir, SPRITESHEET2))
+        self.spritesheet3 = Spritesheet(path.join(img_dir, SPRITESHEET3))
         # load sounds
         self.snd_dir = path.join(self.dir, 'snd')
 
@@ -48,6 +49,8 @@ class Game:
         self.score = 0
         self.all_sprites = pygame.sprite.Group()
         self.blocks = pygame.sprite.Group()
+        self.mobs = pygame.sprite.Group()
+        self.mob_timer = 0
         self.player = Player(self)
         self.all_sprites.add(self.player)
         for b in BLOCK_LIST:
@@ -73,6 +76,12 @@ class Game:
         # update
         self.all_sprites.update()
 
+        # spawn mob
+        now = pygame.time.get_ticks()
+        if now - self.mob_timer > 5000 + choice([-2000, -1500, -500, 500, 1000]):
+            self.mob_timer = now
+            Mob(self)
+
         # collision detection if falling
         if self.player.vel.y > 0:
             collision = pygame.sprite.spritecollide(
@@ -95,6 +104,9 @@ class Game:
         if self.player.rect.top <= HEIGHT / 4:
             # change y to velocity so the level can move
             self.player.pos.y += max(abs(self.player.vel.y), 2)
+            for mob in self.mobs:
+                # move mobs down at same velocity as player
+                mob.rect.y += max(abs(self.player.vel.y), 2)
             for block in self.blocks:
                 # move blocks down at same velocity as player
                 block.rect.y += max(abs(self.player.vel.y), 2)
