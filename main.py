@@ -150,10 +150,8 @@ class Game:
         # generate new blocks
         while len(self.blocks) < 8:
             w = randrange(64, 128)
-            b = Block(self, randrange(0, WIDTH - w), randrange(-128, -32))
-
-        # if a block has collision with another block, remove one
-
+            new_x, new_y = randrange(0, WIDTH - w), randrange(-160, -64)
+            b = Block(self, new_x, new_y)
 
     def events(self):
         # pygame events
@@ -175,7 +173,8 @@ class Game:
         # draw events
         self.screen.fill(SKY)
         self.all_sprites.draw(self.screen)
-        self.draw_text(f"Score: {self.score}", 22, WHITE, WIDTH / 2, HEIGHT - 32)
+        self.draw_text(f"Score: {self.score}", 22,
+                       WHITE, WIDTH / 2, HEIGHT - 32)
 
         # flip display after draw events
         pygame.display.flip()
