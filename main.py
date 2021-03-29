@@ -17,8 +17,8 @@ class Game:
         # game
         self.clock = pygame.time.Clock()
         self.running = True
-        self.game_font = pygame.font.match_font(GAME_FONT)
         self.load_data()
+        self.game_font = pygame.font.Font("font/Kenney Future Square.ttf", 22)
         # load music - music from https://sycamoredrive.bandcamp.com/album/the-waves-the-sea
         # available under cc license https://creativecommons.org/licenses/by-nc-sa/3.0/us/
         pygame.mixer.music.load(
@@ -46,7 +46,7 @@ class Game:
         self.cloud_images = []
         for i in range(1, 4):
             self.cloud_images.append(pygame.image.load(
-                path.join(img_dir, 'cloud{}.png'.format(i))).convert())
+                path.join(img_dir, f'cloud{i}.png')).convert())
         # load sounds
         self.snd_dir = path.join(self.dir, 'snd')
 
@@ -175,20 +175,20 @@ class Game:
         # draw events
         self.screen.fill(SKY)
         self.all_sprites.draw(self.screen)
-        self.draw_text("Score: " + str(self.score), 22, WHITE, WIDTH / 2, 15)
+        self.draw_text(f"Score: {self.score}", 22, WHITE, WIDTH / 2, HEIGHT - 32)
 
         # flip display after draw events
         pygame.display.flip()
 
     def show_splash(self):
         self.screen.fill(SKY)
-        self.draw_text(TITLE, 48, WHITE, WIDTH / 2, HEIGHT / 4)
+        self.draw_text(TITLE, 48, WHITE, WIDTH / 2, 32)
         self.draw_text("Arrows to move, space to jump.",
-                       22, WHITE, WIDTH / 2, HEIGHT / 2)
+                       22, WHITE, WIDTH / 2, 64)
         self.draw_text("Press any key to start.",
-                       22, WHITE, WIDTH / 2, HEIGHT * 3 / 4)
-        self.draw_text("High Score: " + str(self.high_score),
-                       22, WHITE, WIDTH / 2, 15)
+                       22, WHITE, WIDTH / 2, 96)
+        self.draw_text(f"High Score: {self.high_score}",
+                       22, WHITE, WIDTH / 2, 128)
 
         # update display and wait for input
         pygame.display.flip()
@@ -213,9 +213,9 @@ class Game:
             return
         self.screen.fill(SKY)
         self.draw_text("GAME OVER", 48, WHITE, WIDTH / 2, HEIGHT / 4)
-        self.draw_text("Score: " + str(self.score),
+        self.draw_text(f"Score: {self.score}",
                        22, WHITE, WIDTH / 2, HEIGHT / 2)
-        self.draw_text("Press any key to play again.",
+        self.draw_text("Press any key to play again",
                        22, WHITE, WIDTH / 2, HEIGHT * 3 / 4)
         # new high score
         if self.score > self.high_score:
@@ -226,7 +226,7 @@ class Game:
                 f.write(str(self.score))
         # show high_score
         else:
-            self.draw_text("High score: " + str(self.high_score),
+            self.draw_text(f"High score: {self.score}",
                            22, WHITE, WIDTH / 2, HEIGHT / 2 + 40)
 
         # update display and wait for input
@@ -234,8 +234,7 @@ class Game:
         self.wait_for_key()
 
     def draw_text(self, text, size, color, x, y):
-        font = pygame.font.Font(self.game_font, size)
-        text_surface = font.render(text, True, color)
+        text_surface = self.game_font.render(text, True, color)
         text_rect = text_surface.get_rect()
         text_rect.midtop = (x, y)
         self.screen.blit(text_surface, text_rect)

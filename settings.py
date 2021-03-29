@@ -18,6 +18,7 @@ SKY = (0, 155, 155)
 # game
 TITLE = "PyJumper"
 FPS = 60
+ANIMATION_SPEED = 200
 MOB_FREQ = 5000
 
 # layers
@@ -40,10 +41,9 @@ BLOCK_LIST = [(0, HEIGHT - 60),
               (175, 100)]
 
 # assets
-GAME_FONT = 'Arial'
+GAME_FONT = 'Kenney Mini.ttf'
 SCORE_FILE = 'highscores.txt'
 game_folder = path.dirname(__file__)
 SPRITESHEET1 = 'tiles_sheet.png'
 SPRITESHEET2 = 'spritesheet_players.png'
 SPRITESHEET3 = 'spritesheet_jumper.png'
-ANIMATION_SPEED = 200
